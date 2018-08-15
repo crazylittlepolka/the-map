@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "leaflet-map": "^0.2.1",
+    "mapbox": "^1.0.0-beta10",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-leaflet": "^2.0.0",
