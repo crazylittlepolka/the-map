@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bianchimro/react-leaflet": "^1.7.8-b",
     "leaflet-map": "^0.2.1",
     "mapbox": "^1.0.0-beta10",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-google-maps": "^9.4.5",
     "react-leaflet": "^2.0.0",
     "react-scripts": "1.1.4"
   },
