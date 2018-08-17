@@ -24,9 +24,9 @@ class MapItem extends Component {
 		        >
 		          <Marker
 		            onClick = { this.onMarkerClick }
-		            title = { 'Changing Colors Garage'  }
+		            title = { 'the place'  }
 		            position = { this.props.initialCenter} 
-		            name = { 'Changing Colors Garage'  }
+		            name = { 'the place'  }
 		          />
 		          <InfoWindow
 		            marker = { this.props.activeMarker }

@@ -3,7 +3,7 @@ import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
 import './App.css';
 import MapItem from './MapItem'
 
-const centerPosition = { lat: 39.648209, lng: -75.711185 };
+const initialCenter = { lat: 39.648209, lng: -75.711185 };
 
 class App extends Component {
 
@@ -18,18 +18,18 @@ class App extends Component {
     //this.onMarkerClick = this.onMarkerClick.bind(this);
     //this.onMapClick = this.onMapClick.bind(this);
   
-  onMarkerClick = ( props, marker, e) => {
+  onMarkerClick = ( props, marker) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
   }
-  onMapClick = (props) => {
+  onMapClick = () => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null
+        //activeMarker: null
       });
     }
   }
@@ -44,7 +44,7 @@ class App extends Component {
           onMarkerClick={this.onMarkerClick}
           showingInfoWindow={ this.state.showingInfoWindow}
           marker={ this.state.activeMarker}
-          initialCenter={ centerPosition }
+          initialCenter={ initialCenter }
         />
 
 
@@ -53,6 +53,8 @@ class App extends Component {
     );
   }
 }
+
+
 export default GoogleApiWrapper({
     api: (process.env.AIzaSyDX3Iq_WqGPYBaVmHvfMcydqRyUg1b2M6I)
 })(App)
