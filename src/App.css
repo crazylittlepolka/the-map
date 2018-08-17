@@ -9,10 +9,14 @@ body {
 
 }
 
-.leaflet-container {
+.map-item {
   height: 100vh;
   width: 70vw;
 
 }
 
+.map-container {
+	height: 100vh;
+	width: 70vw;
+}
 

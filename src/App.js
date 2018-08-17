@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
+import './App.css';
+import MapItem from './MapItem'
 
-
+const centerPosition = { lat: 39.648209, lng: -75.711185 };
 
 class App extends Component {
 
@@ -9,13 +11,14 @@ class App extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {}
+
   }
 
     // binding this to event-handler functions
     //this.onMarkerClick = this.onMarkerClick.bind(this);
     //this.onMapClick = this.onMapClick.bind(this);
   
-  onMarkerClick = (props, marker, e) => {
+  onMarkerClick = ( props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -31,43 +34,27 @@ class App extends Component {
     }
   }
   render() {
-    const style = {
-      width: '70vw',
-      height: '100vh',
 
-    }
     return (
-      <div>
+      <div className="map-item">
+
+        <MapItem 
+          google={ this.props.google}
+          onMapClick={ this.onMapClick}
+          onMarkerClick={this.onMarkerClick}
+          showingInfoWindow={ this.state.showingInfoWindow}
+          marker={ this.state.activeMarker}
+          initialCenter={ centerPosition }
+        />
 
 
-        <Map
-          item
-          xs = { 12 }
-          style = { style }
-          google = { this.props.google }
-          onClick = { this.onMapClick }
-          zoom = { 14 }
-          initialCenter = {{ lat: 39.648209, lng: -75.711185 }}
-        >
-          <Marker
-            onClick = { this.onMarkerClick }
-            title = { 'Changing Colors Garage' }
-            position = {{ lat: 39.648209, lng: -75.711185 }}
-            name = { 'Changing Colors Garage' }
-          />
-          <InfoWindow
-            marker = { this.state.activeMarker }
-            visible = { this.state.showingInfoWindow }
-          >
-            <p>test</p>
-          </InfoWindow>
-        </Map>
+
       </div>
     );
   }
 }
 export default GoogleApiWrapper({
-    apiKey: (process.env.AIzaSyDX3Iq_WqGPYBaVmHvfMcydqRyUg1b2M6I)
+    api: (process.env.AIzaSyDX3Iq_WqGPYBaVmHvfMcydqRyUg1b2M6I)
 })(App)
 
 
