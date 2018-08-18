@@ -9,6 +9,10 @@ const initialCenter = { lat: 52.229675, lng: 21.012230 };
 
 class App extends Component {
 
+  state = {
+    locations: []
+  }
+
 //functions are invoked
   componentDidMount(){
     this.getData()
@@ -24,7 +28,7 @@ class App extends Component {
   //function to get data from foursquare
   getData = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
-    const parameters ={
+    const parameters = {
       client_id: "BNQJOE5SN2UNORIBLE0WO0GPVVFR3J0PG2ZRQ3TUXVNQJXM2",
       client_secret: "OAHDTPWMAIMIXUP4YZERT4FVQN50HACM20I4M23V1RG4EPXH",
       requestId: "5b77fe52dd579704658e06b5",
@@ -33,7 +37,8 @@ class App extends Component {
     }
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response =>{
-      console.log(response.data.response.groups[0].items)
+      this.setState({ locations: response.data.response.groups[0].items })
+      
     })
     .catch(error => {
       console.log("ERROR", error)
@@ -49,6 +54,12 @@ class App extends Component {
       zoom: 12,
       center: initialCenter
     });
+
+    var marker = new window.google.maps.Marker({
+      position: initialCenter,
+      map: map,
+      title: 'title'
+    })
   }
     render() {
 
