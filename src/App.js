@@ -16,8 +16,7 @@ class App extends Component {
 //functions are invoked
   componentDidMount(){
     this.getData()
-    this.loadMap()
-    
+        
   }
 
   //function to load built map
@@ -37,7 +36,8 @@ class App extends Component {
     }
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response =>{
-      this.setState({ locations: response.data.response.groups[0].items })
+      this.setState({ locations: response.data.response.groups[0].items 
+      }, this.loadMap())
       
     })
     .catch(error => {
@@ -55,11 +55,15 @@ class App extends Component {
       center: initialCenter
     });
 
-    var marker = new window.google.maps.Marker({
-      position: initialCenter,
-      map: map,
-      title: 'title'
+    this.state.locations.map(location => {
+
+      let marker = new window.google.maps.Marker({
+        position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
+        map: map,
+        title: 'title'
+      })
     })
+
   }
     render() {
 
