@@ -14,8 +14,7 @@ class MapItem extends Component {
 			<div className="map-container">
 
 				<Map
-		          //item
-		          //xs = { 12 }
+
 		          style = { style }
 		          google = { this.props.google }
 		          onClick = { this.onMapClick }

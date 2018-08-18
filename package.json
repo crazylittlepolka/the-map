@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@bianchimro/react-leaflet": "^1.7.8-b",
+    "axios": "^0.18.0",
     "google-maps-react": "^2.0.2",
     "leaflet-map": "^0.2.1",
     "mapbox": "^1.0.0-beta10",
