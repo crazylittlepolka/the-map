@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-//import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
 import './App.css';
-//import MapItem from './MapItem'
+import Search from './Search'
 
 import axios from 'axios'
 
@@ -88,6 +87,9 @@ class App extends Component {
       return (
         <div>
           <div id="map-item"></div>
+
+          <Search />
+          
         </div>
       );
     }

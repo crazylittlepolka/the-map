@@ -1,13 +1,20 @@
 body {
-  margin: 0;
-  height: 100vh;
-  width: 100vw;
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
 }
 
 
 #map-item {
-  height: 100vh;
-  width: 70vw;
+  	height: 100vh;
+  	width: 70vw;
+	display: inline-block;
+}
 
+.search {
+	display: inline-block;
+	position: absolute;
+	top: 0px;
+	padding: 20px;
 }
 
