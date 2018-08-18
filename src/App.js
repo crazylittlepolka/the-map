@@ -30,7 +30,7 @@ class App extends Component {
     const parameters = {
       client_id: "BNQJOE5SN2UNORIBLE0WO0GPVVFR3J0PG2ZRQ3TUXVNQJXM2",
       client_secret: "OAHDTPWMAIMIXUP4YZERT4FVQN50HACM20I4M23V1RG4EPXH",
-      requestId: "5b77fe52dd579704658e06b5",
+      categoryId: "4bf58dd8d48988d163941735",
       near: "Warsaw",
       v: 20180818
     }
@@ -51,16 +51,35 @@ class App extends Component {
   initMap = () => {
     
     var map = new window.google.maps.Map(document.getElementById('mapid'), {
-      zoom: 12,
+      zoom: 13,
       center: initialCenter
     });
 
+
+    var infoWindow = new window.google.maps.InfoWindow() 
+
+    //display markers
     this.state.locations.map(location => {
 
-      let marker = new window.google.maps.Marker({
+      var contentString = `${location.venue.name}`
+
+
+      var marker = new window.google.maps.Marker({
         position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
         map: map,
-        title: 'title'
+        title: location.venue.name
+      })
+
+
+
+      //function listening to the click on the marker
+      marker.addListener('click', function() {
+
+        //change the infoWindow content when we change the clicked marker
+        infoWindow.setContent(contentString)
+
+        //infoWindow of clicked marker opens
+        infoWindow.open(map, marker);
       })
     })
 
@@ -68,9 +87,9 @@ class App extends Component {
     render() {
 
       return (
-        <main>
+        <div>
           <div className="map-item"></div>
-        </main>
+        </div>
       );
     }
   }
