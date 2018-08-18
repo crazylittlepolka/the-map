@@ -4,11 +4,8 @@ body {
   width: 100vw;
 }
 
-#mapid {
-	height: 100vh;
-	width: 100wv;
-}
-.map-item {
+
+#map-item {
   height: 100vh;
   width: 70vw;
 

@@ -50,7 +50,7 @@ class App extends Component {
   //function to build the map
   initMap = () => {
     
-    var map = new window.google.maps.Map(document.getElementById('mapid'), {
+    var map = new window.google.maps.Map(document.getElementById('map-item'), {
       zoom: 13,
       center: initialCenter
     });
@@ -85,10 +85,9 @@ class App extends Component {
 
   }
     render() {
-
       return (
         <div>
-          <div className="map-item"></div>
+          <div id="map-item"></div>
         </div>
       );
     }
