@@ -29,11 +29,11 @@ class App extends Component {
       client_secret: "OAHDTPWMAIMIXUP4YZERT4FVQN50HACM20I4M23V1RG4EPXH",
       requestId: "5b77fe52dd579704658e06b5",
       near: "Warsaw",
-      v: "20180818"
+      v: 20180818
     }
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response =>{
-      console.log(response)
+      console.log(response.data.response.groups[0].items)
     })
     .catch(error => {
       console.log("ERROR", error)
