@@ -32,7 +32,9 @@ class MapItem extends Component {
 		            marker = { this.props.activeMarker }
 		            visible = { this.props.showingInfoWindow }
 		          >
-		            <p>test</p>
+		          	<div>
+		            	<p>test</p>
+		            </div>
 		          </InfoWindow>
 		        </Map>
 			</div>

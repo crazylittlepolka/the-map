@@ -39,11 +39,12 @@ class App extends Component {
       <div className="map-item">
 
         <MapItem 
-          google={ this.props.google}
-          onMapClick={ this.onMapClick}
-          onMarkerClick={this.onMarkerClick}
-          showingInfoWindow={ this.state.showingInfoWindow}
-          marker={ this.state.activeMarker}
+          google={ this.props.google }
+          onMapClick={ this.onMapClick }
+          onMarkerClick={ this.onMarkerClick }
+          showingInfoWindow={ this.state.showingInfoWindow }
+          activeMarker={ this.state.activeMarker }
+          selectedPlace={ this.state.selectedPlace }
           initialCenter={ initialCenter }
         />
 
