@@ -3,6 +3,11 @@ import './App.css';
 
 class LocationsList extends Component {
 
+	showInfoWindow = e => {
+		//open marker of clicked venue-park
+		this.props.openInfoWindow(e.target.value)
+	}
+	
 	render() {
 		const parkName = `${this.props.location.venue.name}`
 
@@ -10,9 +15,11 @@ class LocationsList extends Component {
 			<div className="locations-list">
 
 
-				<button>{ parkName }</button>
-				
-
+				<button
+					onClick={ this.showInfoWindow }
+				>
+					{ parkName }
+				</button>
 			</div>
 		)
 	}

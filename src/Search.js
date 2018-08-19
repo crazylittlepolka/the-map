@@ -21,7 +21,7 @@ class Search extends Component {
 								key={ location.venue.id } 
 								locations={ this.props.locations }
 								location={ location }
-
+								openInfoWindow={ this.props.openInfoWindow }
 							/>
 						)					
 					})
