@@ -10,7 +10,8 @@ class App extends Component {
 
   state = {
     locations: [],
-
+    markers: [],
+    selectedMarker:{}
   }
 
 //functions are invoked
@@ -67,7 +68,8 @@ class App extends Component {
       var marker = new window.google.maps.Marker({
         position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
         map: map,
-        title: location.venue.name 
+        title: location.venue.name,
+        id: location.venue.id
       })
 
 
@@ -80,13 +82,18 @@ class App extends Component {
 
         //infoWindow of clicked marker opens
         //infoWindow.open(map, marker);         
-            const openInfoWindow = infoWindow.open(map, marker)
-      })
+        infoWindow.open(map, marker)
+
+        
+        })
+      
+
+      this.state.markers.push(marker)
     })
 
   }
     render() {
-      
+      console.log(this.state.selectedMarker)
       return (
         <div>
           <h1>Beautiful Parks of Warsaw</h1>
@@ -94,7 +101,9 @@ class App extends Component {
 
           <Search 
             locations={ this.state.locations }
-            openInfoWindow={ this.openInfoWindow }
+            //openInfoWindow={ this.openInfoWindow }
+            markers={ this.state.markers }
+            contentString={ this.contentString }
           />
 
         </div>

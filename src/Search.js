@@ -20,8 +20,10 @@ class Search extends Component {
 							<LocationsList
 								key={ location.venue.id } 
 								locations={ this.props.locations }
+								markers={ this.props.markers }
 								location={ location }
-								openInfoWindow={ this.props.openInfoWindow }
+								//openInfoWindow={ this.openInfoWindow }
+								contentString={ this.props.contentString }
 							/>
 						)					
 					})
