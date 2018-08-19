@@ -64,15 +64,13 @@ class App extends Component {
 
       var contentString = `${location.venue.name} address: ${location.venue.location.address}`
 
-
       var marker = new window.google.maps.Marker({
         position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
         map: map,
         title: location.venue.name,
-        id: location.venue.id
+        id: location.venue.id,
+        animation: window.google.maps.Animation.DROP,
       })
-
-
 
       //function listening to the click on the marker
       marker.addListener('click', function() {
@@ -80,16 +78,23 @@ class App extends Component {
         //change the infoWindow content when we change the clicked marker
         infoWindow.setContent(contentString)
 
-        //infoWindow of clicked marker opens
-        //infoWindow.open(map, marker);         
-        infoWindow.open(map, marker)
+        //infoWindow of clicked marker opens             
+        infoWindow.open(map, marker)        
+      })      
 
-        
-        })
-      
-
+      marker.addListener('mouseover', function() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        }
+      })
+      marker.addListener('mouseout', function() {
+        marker.setAnimation() !== null
+      })
       this.state.markers.push(marker)
     })
+
 
   }
     render() {
