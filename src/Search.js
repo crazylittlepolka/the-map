@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import escapeRegExp from 'escape-string-regexp'
 import LocationsList from './LocationsList'
 import './App.css';
 
@@ -11,14 +12,27 @@ class Search extends Component {
 
 	displayQuery = (query) => {
     	this.setState(
-      		{ query }, this.showSearch
+      		{ query }, this.theSearch
     	)
   	}
 
+  	theSearch = (query) => {
+  		
 
+  		if (this.state.query) {
+  			const match = new RegExp(escapeRegExp(this.state.query), 'i')
+
+  			this.setState({ matchingLocations : this.props.locations.filter(location =>
+  				match.test(location.venue.name)
+  			)})
+  		} else {
+  			this.setState({ matchingLocations : this.props.locations})
+  		}
+  	}
 
 	render() {
 		console.log(this.state.query)
+
 		return (
 			<div className="search">
 
@@ -30,14 +44,13 @@ class Search extends Component {
 				>
 				</input>
 				
-				{this.props.locations.map(location => {
+				{this.state.matchingLocations.map(location => {
 						return (
 							<LocationsList
 								key={ location.venue.id } 
-								locations={ this.props.locations }
+								locations={ this.state.matchingLocations }
 								markers={ this.props.markers }
-								location={ location }
-								//openInfoWindow={ this.openInfoWindow }
+								location={ location }								
 								contentString={ this.props.contentString }
 							/>
 						)					
