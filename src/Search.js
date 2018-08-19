@@ -4,14 +4,29 @@ import './App.css';
 
 class Search extends Component {
 
-	render() {
+	state = {
+		query: '',
+		matchingLocations: []
+	}
 
+	displayQuery = (query) => {
+    	this.setState(
+      		{ query }, this.showSearch
+    	)
+  	}
+
+
+
+	render() {
+		console.log(this.state.query)
 		return (
 			<div className="search">
 
 				<input
 					type="text"
 					placeholder="Search for the park"
+					value={ this.state.query }
+					onChange={e => this.displayQuery(e.target.value)}
 				>
 				</input>
 				
