@@ -92,7 +92,7 @@ class App extends Component {
 
           <Search 
             locations={this.state.locations}
-            
+
           />
 
         </div>

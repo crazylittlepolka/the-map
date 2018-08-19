@@ -18,7 +18,7 @@ class Search extends Component {
 				{this.props.locations.map(location => {
 						return (
 							<LocationsList
-								key={ location.id } 
+								key={ location.venue.id } 
 								locations={ this.props.locations }
 								location={ location }
 
