@@ -84,12 +84,17 @@ class App extends Component {
 
   }
     render() {
+      console.log(this.state.locations)
       return (
         <div>
+          <h1>Beautiful Parks of Warsaw</h1>
           <div id="map-item"></div>
 
-          <Search />
-          
+          <Search 
+            locations={this.state.locations}
+            
+          />
+
         </div>
       );
     }
