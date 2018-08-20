@@ -11,10 +11,37 @@ body {
 	display: inline-block;
 }
 
+h1 {
+	color: #007300;
+	text-align: center;
+	font-family: sans-serif;
+}
+
 .search {
 	display: inline-block;
 	position: absolute;
-	top: 0px;
+	top: 60px;
 	padding: 20px;
 }
 
+input {
+	width: 100%;
+	padding: 5px;
+	margin-bottom: 3px;
+}
+
+button {
+	width: 100%;
+	padding: 5px 5px;
+	margin: 4px 0;
+	border: none;
+	color: #006600;
+	background-color: #e5e5e5;
+	radius: 5px;
+}
+
+button:hover {
+	background-color: #d1e1bf;
+	color: #1C304A;
+
+}

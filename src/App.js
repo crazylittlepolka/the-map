@@ -16,8 +16,7 @@ class App extends Component {
 
 //functions are invoked
   componentDidMount(){
-    this.getData()
-        
+    this.getData()        
   }
 
   //function to load built map
@@ -98,15 +97,14 @@ class App extends Component {
 
   }
     render() {
-      console.log(this.state.selectedMarker)
+      
       return (
         <div>
           <h1>Beautiful Parks of Warsaw</h1>
           <div id="map-item"></div>
 
           <Search 
-            locations={ this.state.locations }
-            //openInfoWindow={ this.openInfoWindow }
+            locations={ this.state.locations }          
             markers={ this.state.markers }
             contentString={ this.contentString }
           />

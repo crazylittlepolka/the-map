@@ -17,7 +17,6 @@ class Search extends Component {
   	}
 
   	theSearch = (query) => {
-  		
 
   		if (this.state.query) {
   			const match = new RegExp(escapeRegExp(this.state.query), 'i')
@@ -51,7 +50,6 @@ class Search extends Component {
 								locations={ this.state.matchingLocations }
 								markers={ this.props.markers }
 								location={ location }								
-								contentString={ this.props.contentString }
 							/>
 						)					
 					})
