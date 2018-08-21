@@ -58,7 +58,9 @@ class Search extends Component {
 								key={ location.venue.id } 
 								locations={ this.state.locations }
 								markers={ this.props.markers }
-								location={ location }								
+								location={ location }
+								updateInfoWindow={ this.updateInfoWindow }
+								openInfoWindow={ this.openInfoWindow }
 							/>
 						)
 						 

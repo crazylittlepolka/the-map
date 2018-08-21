@@ -11,10 +11,9 @@ class App extends Component {
   state = {
     locations: [],
     markers: [],
-    selectedMarker:{}
   }
 
-//functions are invoked
+  //functions are invoked
   componentDidMount(){
     this.getData()        
   }
@@ -24,6 +23,7 @@ class App extends Component {
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDX3Iq_WqGPYBaVmHvfMcydqRyUg1b2M6I&callback=initMap")
     window.initMap = this.initMap
   }
+
   //function to get data from foursquare
   getData = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
@@ -34,6 +34,7 @@ class App extends Component {
       near: "Warsaw",
       v: 20180818
     }
+    //fetch the foursquare API
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response =>{
       this.setState({ locations: response.data.response.groups[0].items 
@@ -43,42 +44,56 @@ class App extends Component {
     .catch(error => {
       console.log("ERROR", error)
     })
-
-
   }
+
+  map = null;
+  infoWindow = null;
+  
+  updateInfoWindow = (contentString) => {
+    if (this.infoWindow) this.infoWindow.setContent(contentString);    
+  };
+
+  openInfoWindow = (marker) => {
+    if(this.infoWindow) this.infoWindow.open(this.map, marker);    
+  };
+
 
   //function to build the map
   initMap = () => {
     
-    var map = new window.google.maps.Map(document.getElementById('map-item'), {
+    const map = new window.google.maps.Map(document.getElementById('map-item'), {
       zoom: 13,
       center: initialCenter
     });
 
-
-    var infoWindow = new window.google.maps.InfoWindow() 
+    this.map = map;
+    
+    const infoWindow = new window.google.maps.InfoWindow() 
 
     //display markers
     this.state.locations.map(location => {
 
-      var contentString = `${location.venue.name} address: ${location.venue.location.address}`
+      const contentString = `${location.venue.name} address: ${location.venue.location.address}`
 
-      var marker = new window.google.maps.Marker({
+      const marker = new window.google.maps.Marker({
         position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
         map: map,
         title: location.venue.name,
         id: location.venue.id,
         animation: window.google.maps.Animation.DROP,
       })
+      
 
       //function listening to the click on the marker
-      marker.addListener('click', function() {
+      marker.addListener('click', () => {
 
         //change the infoWindow content when we change the clicked marker
-        infoWindow.setContent(contentString)
+        this.updateInfoWindow(contentString);
+                
+        //infoWindow of clicked marker opens
+        this.openInfoWindow(marker);
 
-        //infoWindow of clicked marker opens             
-        infoWindow.open(map, marker)        
+        console.log('event', contentString)
       })      
 
       marker.addListener('mouseover', function() {
@@ -107,6 +122,8 @@ class App extends Component {
             locations={ this.state.locations }          
             markers={ this.state.markers }
             contentString={ this.contentString }
+            updateInfoWindow={ this.updateInfoWindow }
+            openInfoWindow={ this.openInfoWindow }
           />
 
         </div>
