@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import escapeRegExp from 'escape-string-regexp'
 import LocationsList from './LocationsList'
-import './App.css';
 
 class Search extends Component {
 
@@ -59,8 +58,8 @@ class Search extends Component {
 								locations={ this.state.locations }
 								markers={ this.props.markers }
 								location={ location }
-								updateInfoWindow={ this.updateInfoWindow }
-								openInfoWindow={ this.openInfoWindow }
+								updateInfoWindow={ this.props.updateInfoWindow }
+								openInfoWindow={ this.props.openInfoWindow }
 							/>
 						)
 						 
