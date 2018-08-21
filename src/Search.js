@@ -5,9 +5,12 @@ import './App.css';
 
 class Search extends Component {
 
-	state = {
-		query: '',
-		matchingLocations: []
+	constructor(props) {
+		super(props)
+		this.state = {
+			query: '',
+			matchingLocations: props.locations
+		}
 	}
 
 	displayQuery = (query) => {
@@ -43,15 +46,22 @@ class Search extends Component {
 				>
 				</input>
 				
-				{this.state.matchingLocations.map(location => {
+				{this.props.locations.map(location => {
+					const isMatching = !this.state.query || this.state.matchingLocations.find(ml => {
+						return ml.venue.id === location.venue.id
+						})
+						
+						if(!isMatching) return null;
+
 						return (
 							<LocationsList
 								key={ location.venue.id } 
-								locations={ this.state.matchingLocations }
+								locations={ this.state.locations }
 								markers={ this.props.markers }
 								location={ location }								
 							/>
-						)					
+						)
+						 
 					})
 				}
 			</div>

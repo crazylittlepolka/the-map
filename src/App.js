@@ -100,7 +100,7 @@ class App extends Component {
       
       return (
         <div>
-          <h1>Beautiful Parks of Warsaw</h1>
+          <h1>Beautiful Warsaw - find your favourite Green Field</h1>
           <div id="map-item"></div>
 
           <Search 
