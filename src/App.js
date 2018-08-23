@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Search from './Search'
+import Error from './Error'
 
 import axios from 'axios'
 
@@ -11,11 +12,15 @@ class App extends Component {
   state = {
     locations: [],
     markers: [],
+    error: false
   }
 
   //functions are invoked
   componentDidMount(){
-    this.getData()        
+    this.getData();
+    if (window.google === undefined) {
+      this.setState({ error: true})
+    }
   }
 
   //function to load built map
@@ -34,20 +39,29 @@ class App extends Component {
       near: "Warsaw",
       v: 20180818
     }
+
     //fetch the foursquare API
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response =>{
       this.setState({ locations: response.data.response.groups[0].items 
-      }, this.loadMap())
-      
+      }, this.loadMap())      
     })
     .catch(error => {
-      console.log("ERROR", error)
+      console.log("ERROR", error);
+      this.setState({ error: true })
     })
   }
 
   map = null;
   infoWindow = null;
+
+  updateInfoWindow = (contentString) => {
+    if (this.infoWindow) this.infoWindow.setContent(contentString);
+  }
+
+  openInfoWindow = (marker) => {
+    if (this.infoWindow) this.infoWindow.open(this.map, marker);
+  }
 
   //function to build the map
   initMap = () => {
@@ -56,36 +70,35 @@ class App extends Component {
       zoom: 13,
       center: initialCenter
     });
-
     this.map = map;
     
-    const infoWindow = new window.google.maps.InfoWindow() 
+    const infoWindow = new window.google.maps.InfoWindow();
+    this.infoWindow = infoWindow;
 
     //display markers
     this.state.locations.map(location => {
 
-      const contentString = `${location.venue.name} address: ${location.venue.location.address}`
-
+      const contentString = `${location.venue.name} ${location.venue.location.lat.toFixed(5)}, ${location.venue.location.lng.toFixed(5)}`
+      
       const marker = new window.google.maps.Marker({
         position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
         map: map,
         title: location.venue.name,
         id: location.venue.id,
         animation: window.google.maps.Animation.DROP
-      })
-      
+      })      
 
       //function listening to the click on the marker
       marker.addListener('click', () => {
 
         //change the infoWindow content when we change the clicked marker
-        infoWindow.setContent(contentString);
+        this.updateInfoWindow(contentString);
                 
         //infoWindow of clicked marker opens
-        infoWindow.open(map, marker);
-
+        this.openInfoWindow(marker);
       })      
 
+      //adding animation to marker
       marker.addListener('mouseover', function() {
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
@@ -98,27 +111,28 @@ class App extends Component {
       })
       this.state.markers.push(marker)
     })
-
-
   }
-    render() {
+
+  render() {
+    return (
       
-      return (
-        <div>
-          <h1>Beautiful Warsaw - find your favourite Green Field</h1>
-          <div id="map-item"></div>
+      <div role="application">       
 
-          <Search 
-            locations={ this.state.locations }          
-            markers={ this.state.markers }
-            contentString={ this.contentString }
-            map={ this.map }
-          />
+        <h1>Beautiful Warsaw - find your favourite Green Field</h1>
 
-        </div>
-      );
-    }
+        <div id="map-item"></div>
+
+        <Search 
+          locations={ this.state.locations }          
+          markers={ this.state.markers }
+          contentString={ this.contentString }
+          updateInfoWindow= { this.updateInfoWindow }
+          openInfoWindow={ this.openInfoWindow }
+        />
+      </div>
+    );
   }
+}
 
 function loadScript(url) {
   const index = window.document.getElementsByTagName("script")[0]

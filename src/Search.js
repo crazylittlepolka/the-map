@@ -8,32 +8,33 @@ class Search extends Component {
 		super(props)
 		this.state = {
 			query: '',
-			matchingLocations: props.locations
+			matchingLocations: props.locations			
 		}
 	}
 
 	displayQuery = (query) => {
     	this.setState(
-      		{ query }, this.theSearch
+      		{ query }, 
+      		this.theSearch
     	)
   	}
 
+  	//method from Udacity lessons
   	theSearch = (query) => {
 
   		if (this.state.query) {
   			const match = new RegExp(escapeRegExp(this.state.query), 'i')
 
   			this.setState({ matchingLocations : this.props.locations.filter(location =>
-  				match.test(location.venue.name)
-  			)})
+  				match.test(location.venue.name)) } 
+  			)
   		} else {
-  			this.setState({ matchingLocations : this.props.locations})
+  			this.setState({ matchingLocations : this.props.locations })
   		}
   	}
 
 	render() {
-		console.log(this.state.query)
-
+		
 		return (
 			<div className="search">
 
@@ -47,23 +48,22 @@ class Search extends Component {
 				
 				{this.props.locations.map(location => {
 					const isMatching = !this.state.query || this.state.matchingLocations.find(ml => {
-
-						const matchingMarkers = this.props.markers.filter(mar => mar.id === ml.venue.id)
 						return ml.venue.id === location.venue.id
-						})
-						
-						if(!isMatching) return null;										
+					})
+
+					if(!isMatching) return null;					 					
 
 						return (
 							<LocationsList
 								key={ location.venue.id } 
 								locations={ this.state.locations }
 								markers={ this.props.markers }
+								contentString={ this.props.contentString}
 								location={ location }
-            					map={this.props.map}
+            					updateInfoWindow= { this.props.updateInfoWindow }
+        						openInfoWindow={ this.props.openInfoWindow }        						
 							/>
-						)
-						 
+						)						 
 					})
 				}
 			</div>
