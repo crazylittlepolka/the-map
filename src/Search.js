@@ -4,7 +4,7 @@ import LocationsList from './LocationsList'
 
 class Search extends Component {
 
-	constructor(props) {
+	/*constructor(props) {
 		super(props)
 		this.state = {
 			query: '',
@@ -17,10 +17,10 @@ class Search extends Component {
       		{ query }, 
       		this.theSearch
     	)
-  	}
+  	}*/
 
   	//method from Udacity lessons
-  	theSearch = (query) => {
+  	/*theSearch = (query) => {
 
   		if (this.state.query) {
   			const match = new RegExp(escapeRegExp(this.state.query), 'i')
@@ -31,34 +31,26 @@ class Search extends Component {
   		} else {
   			this.setState({ matchingLocations : this.props.locations })
   		}
-  	}
+  	}*/
 
 	render() {
 		
 		return (
-			<div className="search">
-
-				<input
-					type="text"
-					placeholder="Search for the park"
-					value={ this.state.query }
-					onChange={e => this.displayQuery(e.target.value)}
-				>
-				</input>
+			<div>
 				
-				{this.props.locations.map(location => {
-					const isMatching = !this.state.query || this.state.matchingLocations.find(ml => {
-						return ml.venue.id === location.venue.id
-					})
+				{this.props.matchingLocations.map(location => {
+//					const isMatching = !this.state.query || this.state.matchingLocations.find(ml => {
+//						return ml.venue.id === location.venue.id
+//					})
 
-					if(!isMatching) return null;					 					
+//					if(!isMatching) return null;					 					
 
 						return (
 							<LocationsList
 								key={ location.venue.id } 
-								locations={ this.state.locations }
+								//locations={ this.state.locations }
 								markers={ this.props.markers }
-								contentString={ this.props.contentString}
+								//contentString={ this.props.contentString}
 								location={ location }
             					updateInfoWindow= { this.props.updateInfoWindow }
         						openInfoWindow={ this.props.openInfoWindow }        						

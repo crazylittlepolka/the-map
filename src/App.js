@@ -4,6 +4,7 @@ import Search from './Search'
 import Error from './Error'
 
 import axios from 'axios'
+import escapeRegExp from 'escape-string-regexp'
 
 const initialCenter = { lat: 52.229675, lng: 21.012230 };
 
@@ -11,7 +12,9 @@ class App extends Component {
 
   state = {
     locations: [],
+    matchingLocations: [],
     markers: [],
+    query: '',
     error: false
   }
 
@@ -42,8 +45,8 @@ class App extends Component {
 
     //fetch the foursquare API
     axios.get(endPoint + new URLSearchParams(parameters))
-    .then(response =>{
-      this.setState({ locations: response.data.response.groups[0].items 
+    .then(resp =>{
+      this.setState({ locations: resp.data.response.groups[0].items, matchingLocations:  resp.data.response.groups[0].items 
       }, this.loadMap())      
     })
     .catch(error => {
@@ -55,12 +58,26 @@ class App extends Component {
   map = null;
   infoWindow = null;
 
+  //infoWindow functions
   updateInfoWindow = (contentString) => {
     if (this.infoWindow) this.infoWindow.setContent(contentString);
   }
 
   openInfoWindow = (marker) => {
     if (this.infoWindow) this.infoWindow.open(this.map, marker);
+  }
+
+  //search function
+
+  displayQuery = query => {
+    this.setState({query}, this.theSearch)
+  }
+  theSearch = query => {  
+    if (this.state.query) {
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
+      this.setState({ matchingLocations: this.state.locations.filter(location => 
+      match.test(location.venue.name)) } )
+    } 
   }
 
   //function to build the map
@@ -121,14 +138,23 @@ class App extends Component {
         <h1>Beautiful Warsaw - find your favourite Green Field</h1>
 
         <div id="map-item"></div>
-
-        <Search 
-          locations={ this.state.locations }          
-          markers={ this.state.markers }
-          contentString={ this.contentString }
-          updateInfoWindow= { this.updateInfoWindow }
-          openInfoWindow={ this.openInfoWindow }
-        />
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Search for the park"
+            value={ this.state.query }
+            onChange={e => this.displayQuery(e.target.value)}
+          >
+          </input>
+          <Search 
+            locations={ this.state.locations }
+            matchingLocations={ this.state.matchingLocations }          
+            markers={ this.state.markers }
+            query={ this.state.query}
+            updateInfoWindow= { this.updateInfoWindow }
+            openInfoWindow={ this.openInfoWindow }
+          />
+        </div>
       </div>
     );
   }
