@@ -47,10 +47,12 @@ class Search extends Component {
 				
 				{this.props.locations.map(location => {
 					const isMatching = !this.state.query || this.state.matchingLocations.find(ml => {
+
+						const matchingMarkers = this.props.markers.filter(mar => mar.id === ml.venue.id)
 						return ml.venue.id === location.venue.id
 						})
 						
-						if(!isMatching) return null;
+						if(!isMatching) return null;										
 
 						return (
 							<LocationsList
@@ -58,8 +60,7 @@ class Search extends Component {
 								locations={ this.state.locations }
 								markers={ this.props.markers }
 								location={ location }
-								updateInfoWindow={ this.props.updateInfoWindow }
-								openInfoWindow={ this.props.openInfoWindow }
+            					map={this.props.map}
 							/>
 						)
 						 
@@ -70,3 +71,4 @@ class Search extends Component {
 	}
 }
 export default Search
+

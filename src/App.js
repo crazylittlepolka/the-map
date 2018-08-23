@@ -48,15 +48,6 @@ class App extends Component {
 
   map = null;
   infoWindow = null;
-  
-  updateInfoWindow = (contentString) => {
-    if (this.infoWindow) this.infoWindow.setContent(contentString);    
-  };
-
-  openInfoWindow = (marker) => {
-    if(this.infoWindow) this.infoWindow.open(this.map, marker);    
-  };
-
 
   //function to build the map
   initMap = () => {
@@ -80,7 +71,7 @@ class App extends Component {
         map: map,
         title: location.venue.name,
         id: location.venue.id,
-        animation: window.google.maps.Animation.DROP,
+        animation: window.google.maps.Animation.DROP
       })
       
 
@@ -88,12 +79,11 @@ class App extends Component {
       marker.addListener('click', () => {
 
         //change the infoWindow content when we change the clicked marker
-        this.updateInfoWindow(contentString);
+        infoWindow.setContent(contentString);
                 
         //infoWindow of clicked marker opens
-        this.openInfoWindow(marker);
+        infoWindow.open(map, marker);
 
-        console.log('event', contentString)
       })      
 
       marker.addListener('mouseover', function() {
@@ -122,8 +112,7 @@ class App extends Component {
             locations={ this.state.locations }          
             markers={ this.state.markers }
             contentString={ this.contentString }
-            updateInfoWindow={ this.updateInfoWindow }
-            openInfoWindow={ this.openInfoWindow }
+            map={ this.map }
           />
 
         </div>
