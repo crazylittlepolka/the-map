@@ -73,15 +73,21 @@ class App extends Component {
   displayQuery = query => {
     this.setState({query}, this.theSearch)
   }
-  theSearch = (query, latitude, longitude) => {  
+  theSearch = (query) => {  
     if (this.state.query) {
+
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
       this.setState({ matchingLocations: this.state.locations.filter(location => 
-      match.test(location.venue.name)) } ),
-      this.updateMarkers(latitude, longitude)
+      match.test(location.venue.name)) },
+        this.updateMarkerVisibility
+       )
+
+     
     } else {
-      this.setState({ matchingLocations: this.state.locations }),
-      this.updateMarkers(latitude, longitude)
+      this.setState({ matchingLocations: this.state.locations },
+        this.updateMarkerVisibility
+        )
+      
     }
   }
 
@@ -89,7 +95,7 @@ class App extends Component {
     initMap = () => {
       
       const map = new window.google.maps.Map(document.getElementById('map-item'), {
-        zoom: 13,
+        zoom: 11.5,
         center: initialCenter
       });
 
@@ -99,20 +105,28 @@ class App extends Component {
       this.infoWindow = infoWindow;
 
       //build and display markers
-      this.updateMarkers();
+      this.createMarkers();
     }
 
-  updateMarkers = (latitude, longitude) => {
+  //update markers visibility due to query
 
-    this.state.matchingLocations.map(location => {
+  updateMarkerVisibility = () => {
+    this.state.markers.forEach(marker => {
+      const isVisible = this.state.matchingLocations.find(location => location.venue.id === marker.id);
+      marker.setMap(isVisible ? this.map : null);
+    })
+  }
 
-      const contentString = `${location.venue.name} ${location.venue.location.lat.toFixed(5)}, ${location.venue.location.lng.toFixed(5)}`
-      
-      const latitude = location.venue.location.lat;
-      const longitude = location.venue.location.lng;
+  createMarkers = () => {
+    const newMarkers = [];
+
+    this.state.locations.map(location => {
+
+      const {lat, lng } = location.venue.location;
+      const contentString = `${location.venue.name} ${lat.toFixed(5)}, ${lng.toFixed(5)}`;            
 
       const marker = new window.google.maps.Marker({
-        position: {lat: latitude, lng: longitude},
+        position: {lat: lat, lng: lng},
         map: this.map,
         title: location.venue.name,
         id: location.venue.id,
@@ -140,9 +154,10 @@ class App extends Component {
       marker.addListener('mouseout', function() {
         marker.setAnimation() !== null
       })
-      this.state.markers.push(marker)
+      newMarkers.push(marker)
+      
     })
-
+    this.setState({ markers: newMarkers});
   }
 
 
