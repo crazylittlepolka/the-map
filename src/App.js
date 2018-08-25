@@ -14,6 +14,7 @@ class App extends Component {
     locations: [],
     matchingLocations: [],
     markers: [],
+    matchingMarkers: [],
     query: '',
     error: false
   }
@@ -25,6 +26,8 @@ class App extends Component {
       this.setState({ error: true})
     }
   }
+
+  //updateMarkers
 
   //function to load built map
   loadMap = () => {
@@ -76,8 +79,15 @@ class App extends Component {
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
       this.setState({ matchingLocations: this.state.locations.filter(location => 
-      match.test(location.venue.name)) } )
-    } 
+      match.test(location.venue.name)) } ),
+      this.initMap()
+    } else {
+      this.setState({ matchingLocations: this.state.locations }),
+      this.initMap()
+    }
+  }
+  updateMarkers = () => {
+
   }
 
   //function to build the map
@@ -93,7 +103,7 @@ class App extends Component {
     this.infoWindow = infoWindow;
 
     //display markers
-    this.state.locations.map(location => {
+    this.state.matchingLocations.map(location => {
 
       const contentString = `${location.venue.name} ${location.venue.location.lat.toFixed(5)}, ${location.venue.location.lng.toFixed(5)}`
       
@@ -102,7 +112,7 @@ class App extends Component {
         map: map,
         title: location.venue.name,
         id: location.venue.id,
-        animation: window.google.maps.Animation.DROP
+        //animation: window.google.maps.Animation.DROP
       })      
 
       //function listening to the click on the marker
@@ -131,6 +141,8 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.matchingLocations)
+    console.log(this.state.markers)
     return (
       
       <div role="application">       
