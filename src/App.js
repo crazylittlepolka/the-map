@@ -15,22 +15,23 @@ class App extends Component {
     matchingLocations: [],
     markers: [],
      query: '',
-    error: true
+    error: false
   }
 
   //functions are invoked
   componentDidMount(){
-    this.getData();    
-    this.setState({ error: false})    
+    this.getData();
+        
   }
 
   //function to load built map
   loadMap = () => {
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDX3Iq_WqGPYBaVmHvfMcydqRyUg1b2M6I&callback=initMap")
+
     window.initMap = this.initMap
   }
 
-  //function to get data from foursquare
+   //function to get data from foursquare
   getData = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -38,6 +39,7 @@ class App extends Component {
       client_secret: "OAHDTPWMAIMIXUP4YZERT4FVQN50HACM20I4M23V1RG4EPXH",
       categoryId: "4bf58dd8d48988d163941735",
       near: "Warsaw",
+      radius: 4000,
       v: 20180818
     }
 
@@ -47,11 +49,12 @@ class App extends Component {
       this.setState({ 
         locations: resp.data.response.groups[0].items, 
         matchingLocations:  resp.data.response.groups[0].items,
-        erros : false 
-      }, this.loadMap())      
+        }, this.loadMap()
+      )      
     })
     .catch(error => {
-      console.log("ERROR", error);
+      console.log("ERROR Foursquare Data loading", error);
+      this.setState({ error : true })
     })
   }
 
@@ -89,7 +92,7 @@ class App extends Component {
     initMap = () => {
       
       const map = new window.google.maps.Map(document.getElementById('map-item'), {
-        zoom: 11.5,
+        zoom: 12,
         center: initialCenter
       });
 
@@ -155,34 +158,41 @@ class App extends Component {
     this.setState({ markers: newMarkers});
   }
 
-  render() {
-    return (
-      
-      <div role="application">       
+  render() {    
 
-        <h1>Beautiful Warsaw - find your favourite Green Field</h1>
+      if(this.state.error) {
 
-        <div id="map-item"></div>
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Search for the park"
-            value={ this.state.query }
-            onChange={e => this.displayQuery(e.target.value)}
-          >
-          </input>
-          <Search 
-            locations={ this.state.locations }
-            matchingLocations={ this.state.matchingLocations }          
-            markers={ this.state.markers }
-            lat = { this.lat }
-            lng = { this.lng }
-            updateInfoWindow= { this.updateInfoWindow }
-            openInfoWindow={ this.openInfoWindow }
-          />
-        </div>
-      </div>
-    );
+        return <Error />
+
+      } else {
+
+        return (
+          <div role="application">       
+
+            <h1>Find your favourite Green Field of Warsaw</h1>
+
+            <div id="map-item"></div>
+            <div className="search">
+              <input
+                type="text"
+                placeholder="Search for the park"
+                value={ this.state.query }
+                onChange={e => this.displayQuery(e.target.value)}
+              >
+              </input>
+              <Search 
+                locations={ this.state.locations }
+                matchingLocations={ this.state.matchingLocations }          
+                markers={ this.state.markers }
+                lat = { this.lat }
+                lng = { this.lng }
+                updateInfoWindow= { this.updateInfoWindow }
+                openInfoWindow={ this.openInfoWindow }
+              />
+            </div>
+          </div>
+        );
+      }
   }
 }
 
@@ -190,6 +200,7 @@ function loadScript(url) {
   const index = window.document.getElementsByTagName("script")[0]
   const script = window.document.createElement("script")
   script.src = url
+  script.onerror = function() { document.getElementById("map-item").innerHTML = "The map could not be loaded !!! Check Console for details"}
   script.async = true
   script.defer = true
   //adding the child to parent Node
