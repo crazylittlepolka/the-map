@@ -14,17 +14,14 @@ class App extends Component {
     locations: [],
     matchingLocations: [],
     markers: [],
-    matchingMarkers: [],
-    query: '',
-    error: false
+     query: '',
+    error: true
   }
 
   //functions are invoked
   componentDidMount(){
-    this.getData();
-    if (window.google === undefined) {
-      this.setState({ error: true})
-    }
+    this.getData();    
+    this.setState({ error: false})    
   }
 
   //function to load built map
@@ -47,12 +44,14 @@ class App extends Component {
     //fetch the foursquare API
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(resp =>{
-      this.setState({ locations: resp.data.response.groups[0].items, matchingLocations:  resp.data.response.groups[0].items 
+      this.setState({ 
+        locations: resp.data.response.groups[0].items, 
+        matchingLocations:  resp.data.response.groups[0].items,
+        erros : false 
       }, this.loadMap())      
     })
     .catch(error => {
       console.log("ERROR", error);
-      this.setState({ error: true })
     })
   }
 
@@ -69,26 +68,21 @@ class App extends Component {
   }
 
   //search function
-
   displayQuery = query => {
     this.setState({query}, this.theSearch)
   }
   theSearch = (query) => {  
     if (this.state.query) {
-
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
       this.setState({ matchingLocations: this.state.locations.filter(location => 
       match.test(location.venue.name)) },
         this.updateMarkerVisibility
-       )
-
-     
+       )     
     } else {
       this.setState({ matchingLocations: this.state.locations },
         this.updateMarkerVisibility
-        )
-      
-    }
+        )      
+      }
   }
 
   //function to build the map
@@ -108,8 +102,7 @@ class App extends Component {
       this.createMarkers();
     }
 
-  //update markers visibility due to query
-
+  //update markers visibility 
   updateMarkerVisibility = () => {
     this.state.markers.forEach(marker => {
       const isVisible = this.state.matchingLocations.find(location => location.venue.id === marker.id);
@@ -123,6 +116,8 @@ class App extends Component {
     this.state.locations.map(location => {
 
       const {lat, lng } = location.venue.location;
+      this.lat = lat;
+      this.lng = lng;
       const contentString = `${location.venue.name} ${lat.toFixed(5)}, ${lng.toFixed(5)}`;            
 
       const marker = new window.google.maps.Marker({
@@ -160,10 +155,7 @@ class App extends Component {
     this.setState({ markers: newMarkers});
   }
 
-
   render() {
-    console.log(this.state.matchingLocations)
-    console.log(this.state.markers)
     return (
       
       <div role="application">       
@@ -183,7 +175,8 @@ class App extends Component {
             locations={ this.state.locations }
             matchingLocations={ this.state.matchingLocations }          
             markers={ this.state.markers }
-            query={ this.state.query}
+            lat = { this.lat }
+            lng = { this.lng }
             updateInfoWindow= { this.updateInfoWindow }
             openInfoWindow={ this.openInfoWindow }
           />
@@ -204,6 +197,3 @@ function loadScript(url) {
 }
 
 export default App;
-
-
-
