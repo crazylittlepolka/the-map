@@ -27,8 +27,6 @@ class App extends Component {
     }
   }
 
-  //updateMarkers
-
   //function to load built map
   loadMap = () => {
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDX3Iq_WqGPYBaVmHvfMcydqRyUg1b2M6I&callback=initMap")
@@ -75,44 +73,50 @@ class App extends Component {
   displayQuery = query => {
     this.setState({query}, this.theSearch)
   }
-  theSearch = query => {  
+  theSearch = (query, latitude, longitude) => {  
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
       this.setState({ matchingLocations: this.state.locations.filter(location => 
       match.test(location.venue.name)) } ),
-      this.initMap()
+      this.updateMarkers(latitude, longitude)
     } else {
       this.setState({ matchingLocations: this.state.locations }),
-      this.initMap()
+      this.updateMarkers(latitude, longitude)
     }
-  }
-  updateMarkers = () => {
-
   }
 
   //function to build the map
-  initMap = () => {
-    
-    const map = new window.google.maps.Map(document.getElementById('map-item'), {
-      zoom: 13,
-      center: initialCenter
-    });
-    this.map = map;
-    
-    const infoWindow = new window.google.maps.InfoWindow();
-    this.infoWindow = infoWindow;
+    initMap = () => {
+      
+      const map = new window.google.maps.Map(document.getElementById('map-item'), {
+        zoom: 13,
+        center: initialCenter
+      });
 
-    //display markers
+      this.map = map;
+    
+      const infoWindow = new window.google.maps.InfoWindow();
+      this.infoWindow = infoWindow;
+
+      //build and display markers
+      this.updateMarkers();
+    }
+
+  updateMarkers = (latitude, longitude) => {
+
     this.state.matchingLocations.map(location => {
 
       const contentString = `${location.venue.name} ${location.venue.location.lat.toFixed(5)}, ${location.venue.location.lng.toFixed(5)}`
       
+      const latitude = location.venue.location.lat;
+      const longitude = location.venue.location.lng;
+
       const marker = new window.google.maps.Marker({
-        position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
-        map: map,
+        position: {lat: latitude, lng: longitude},
+        map: this.map,
         title: location.venue.name,
         id: location.venue.id,
-        //animation: window.google.maps.Animation.DROP
+        animation: window.google.maps.Animation.DROP
       })      
 
       //function listening to the click on the marker
@@ -138,7 +142,9 @@ class App extends Component {
       })
       this.state.markers.push(marker)
     })
+
   }
+
 
   render() {
     console.log(this.state.matchingLocations)
