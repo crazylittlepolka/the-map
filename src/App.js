@@ -161,10 +161,7 @@ class App extends Component {
 
   //function to open/hide search side bar
   updateBar = () => {
-    //this.setState( this.state.openSearch ? { openSearch : true} : { openSearch : false})
-    //this.setState({ openSearch : !this.state.openSearch })
     const barIsOpen = this.state.openSearch;
-
     this.setState({ openSearch : !barIsOpen })
 
   }
@@ -178,25 +175,26 @@ class App extends Component {
       } else {
 
         return (
-          <div role="application">       
+          <div role="application" className="container">       
             
-            <h1>Find your favourite Green Field of Warsaw</h1>
+            <div className="header">
+              <h1>Find your favourite Green Field of Warsaw</h1>
 
-            <SideBar 
-              updateBar={ this.updateBar }
-            /> 
+              <SideBar 
+                updateBar={ this.updateBar }
+              /> 
 
-            <div id="map-item"></div>
-
+              <div id="map-item"></div>
+            </div>
             { this.state.openSearch && (
 
               <div className="search">              
                 <input
                   type="text"
-                  placeholder="Search for the park"
+                  placeholder="Type park name to search"
                   value={ this.state.query }
                   onChange={e => this.displayQuery(e.target.value)}
-                >
+                >                
                 </input>
 
                 <Search 
@@ -220,7 +218,7 @@ function loadScript(url) {
   const index = window.document.getElementsByTagName("script")[0]
   const script = window.document.createElement("script")
   script.src = url
-  script.onerror = function() { document.getElementById("map-item").innerHTML = "The map could not be loaded !!! Check Console for details"}
+  script.onerror = function() { document.getElementById("map-item").innerHTML = "Something went wrong !!! </br>The map could not be loaded !!! </br> Check Console for details"}
   script.async = true
   script.defer = true
   //adding the child to parent Node

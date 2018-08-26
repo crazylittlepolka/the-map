@@ -8,11 +8,11 @@ class SideBar extends Component {
 
 		return (
 			<button 
-				id="sidebar-button"
+				className="sidebar-button"
 				
-				onclick= { this.props.updateBar }
+				onClick= { this.props.updateBar }
 			>
-				Search
+				Park List
 			</button>
 		)
 	}

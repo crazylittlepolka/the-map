@@ -2,38 +2,55 @@ body {
 	margin: 0;
 	height: 100vh;
 	width: 100vw;
-	background-color: #00aa55;
-	font-size: 100%;
+	background-color: #F0F6F7;	
 }
 
+.container {
+	sdisplay: flex;
+	flex-direction: column;
+	font-family: 'Saira', sans-serif;	
+}
 
+.header {
+	top: 0;
+	position: fixed;
+	z-index: 1;
+}
 #map-item {
-  	height: 100vh;
-  	width: 70vw;
-	display: inline-block;
-	color: #800000;
+	position: fixed;
+	
+  	height: 50vh;
+  	width: 100vw;
+  	color: #800000;
 	font-size: 20px;
 	text-align: center;
 }
 
 h1 {
-	color: #002627;
+	color: #2D7262;
 	text-align: center;
-	font-family: sans-serif;
+	padding: 0 10px;
 }
 
-.search {
-	display: inline-block;
-	position: absolute;
-	top: 100px;
-	padding: 20px;
+
+.sidebar-button {
+	cursor: pointer;
+}
+
+/* SEARCH */
+
+.search {	
+	top: 470px;	
+	position: relative;
+	z-index: 10;
 }
 
 input {
 	width: 100%;
-	margin: 5px 0;
-	padding: 5px;
-	border-radius: 5px;
+	padding: 10px;
+	border-style: none;
+	font-family: 'Saira', sans-serif;
+	color: 8D6C80;
 }
 span {
 	font-size: 30px;
@@ -42,39 +59,65 @@ span {
 
 button {
 	width: 100%;
-	padding: 5px 5px;
-	margin: 4px 0;
-	border: none;
-	color: #002627;
-	background-color: #e5e5e5;
-	border-radius: 10px;
+	padding: 8px 5px;	
+	border: 0.02px solid #E6F0D9;
+	color: #667E6F;
+	background-color: #F0F6F7;
+	font-family: 'Saira', sans-serif;	
 }
 
 button:hover {
-	background-color: #d1e1bf;
-	color: #1C304A;
+	background-color: #fff;
+	color: ##D9E7C8;
+}
+/*SIDEBAR LIST*/
+
+.locations {
+	position: relative;
+	z-index: 100;
+}
+.locations::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.locations::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.locations::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 
+/* ERROR */
+
 .error {
+	margin-top: 50px;
 	color: #800000;
 	font-size: 20px;
 	text-align: center;
 	font-weight: bold;
 }
 
-/*media query*/
+/*MEDIA QUERY*/
 
-@media screen and (max-width 460px) {
+@media screen and (max-width: 460px) {
 
 	#map-item {
 		width: 100vw;
-		display: block;
+		
 		font-size: 15px;
 	}
 	h1 {
-		font-size: 50%;
+		font-size: 20px;
 	}
+}
+@media screen and (min-width: 461px) {
 
-
-
+		#map-item{
+		display: inline-block;
+	}
+	.search {
+		display: inline-block;
+	}
 }

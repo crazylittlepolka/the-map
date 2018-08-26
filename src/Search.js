@@ -6,7 +6,7 @@ class Search extends Component {
 
 	render() {		
 		return (
-			<div>
+			<div className="locations">
 				
 				{this.props.matchingLocations.map(location => {				 					
 
