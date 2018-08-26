@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Search from './Search'
 import Error from './Error'
+import SideBar from './SideBar'
 
 import axios from 'axios'
 import escapeRegExp from 'escape-string-regexp'
@@ -14,14 +15,14 @@ class App extends Component {
     locations: [],
     matchingLocations: [],
     markers: [],
-     query: '',
+    query: '',
+    openSearch: true,
     error: false
   }
 
   //functions are invoked
   componentDidMount(){
-    this.getData();
-        
+    this.getData();        
   }
 
   //function to load built map
@@ -158,6 +159,16 @@ class App extends Component {
     this.setState({ markers: newMarkers});
   }
 
+  //function to open/hide search side bar
+  updateBar = () => {
+    //this.setState( this.state.openSearch ? { openSearch : true} : { openSearch : false})
+    //this.setState({ openSearch : !this.state.openSearch })
+    const barIsOpen = this.state.openSearch;
+
+    this.setState({ openSearch : !barIsOpen })
+
+  }
+
   render() {    
 
       if(this.state.error) {
@@ -168,28 +179,37 @@ class App extends Component {
 
         return (
           <div role="application">       
-
+            
             <h1>Find your favourite Green Field of Warsaw</h1>
 
+            <SideBar 
+              updateBar={ this.updateBar }
+            /> 
+
             <div id="map-item"></div>
-            <div className="search">
-              <input
-                type="text"
-                placeholder="Search for the park"
-                value={ this.state.query }
-                onChange={e => this.displayQuery(e.target.value)}
-              >
-              </input>
-              <Search 
-                locations={ this.state.locations }
-                matchingLocations={ this.state.matchingLocations }          
-                markers={ this.state.markers }
-                lat = { this.lat }
-                lng = { this.lng }
-                updateInfoWindow= { this.updateInfoWindow }
-                openInfoWindow={ this.openInfoWindow }
-              />
-            </div>
+
+            { this.state.openSearch && (
+
+              <div className="search">              
+                <input
+                  type="text"
+                  placeholder="Search for the park"
+                  value={ this.state.query }
+                  onChange={e => this.displayQuery(e.target.value)}
+                >
+                </input>
+
+                <Search 
+                  locations={ this.state.locations }
+                  matchingLocations={ this.state.matchingLocations }          
+                  markers={ this.state.markers }
+                  lat = { this.lat }
+                  lng = { this.lng }
+                  updateInfoWindow= { this.updateInfoWindow }
+                  openInfoWindow={ this.openInfoWindow }
+                />
+              </div>
+              )}
           </div>
         );
       }

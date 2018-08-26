@@ -3,6 +3,7 @@ body {
 	height: 100vh;
 	width: 100vw;
 	background-color: #00aa55;
+	font-size: 100%;
 }
 
 
@@ -24,14 +25,19 @@ h1 {
 .search {
 	display: inline-block;
 	position: absolute;
-	top: 60px;
+	top: 100px;
 	padding: 20px;
 }
 
 input {
 	width: 100%;
+	margin: 5px 0;
 	padding: 5px;
-	margin-bottom: 3px;
+	border-radius: 5px;
+}
+span {
+	font-size: 30px;
+	cursor: pointer;
 }
 
 button {
@@ -54,4 +60,21 @@ button:hover {
 	font-size: 20px;
 	text-align: center;
 	font-weight: bold;
+}
+
+/*media query*/
+
+@media screen and (max-width 460px) {
+
+	#map-item {
+		width: 100vw;
+		display: block;
+		font-size: 15px;
+	}
+	h1 {
+		font-size: 50%;
+	}
+
+
+
 }
