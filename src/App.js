@@ -94,12 +94,13 @@ class App extends Component {
       
       const map = new window.google.maps.Map(document.getElementById('map-item'), {
         zoom: 12,
-        center: initialCenter
+        center: initialCenter,
+        disableDefaultUI: true
       });
 
       this.map = map;
     
-      const infoWindow = new window.google.maps.InfoWindow();
+      const infoWindow = new window.google.maps.InfoWindow({ maxWidth: 100});
       this.infoWindow = infoWindow;
 
       //build and display markers
@@ -175,39 +176,43 @@ class App extends Component {
       } else {
 
         return (
-          <div role="application" className="container">       
-            
-            <div className="header">
-              <h1>Find your favourite Green Field of Warsaw</h1>
+          <div role="application" className="layout">
+            <header className="layout__header header">
 
-              <SideBar 
-                updateBar={ this.updateBar }
-              /> 
+              <button className="header__button" 
+              
+                onClick= { this.updateBar }
+                >
+                  <i class="fa fa-bars"> </i>
+                    Parks List
+                </button>
 
+              <h1 className="header__title">Discover Green Fields of Warsaw</h1>
+            </header>
+
+            <aside className={`layout__sidebar${ this.state.openSearch ? ' layout__sidebar--open' : ''}`}>
+              <input
+                type="text"
+                placeholder="Type park name to search"
+                value={ this.state.query }
+                onChange={e => this.displayQuery(e.target.value)}
+              >
+              </input>
+
+              <Search
+                locations={ this.state.locations }
+                matchingLocations={ this.state.matchingLocations }
+                markers={ this.state.markers }
+                lat = { this.lat }
+                lng = { this.lng }
+                updateInfoWindow= { this.updateInfoWindow }
+                openInfoWindow={ this.openInfoWindow }
+              />
+            </aside>
+
+            <main className="layout__main">
               <div id="map-item"></div>
-            </div>
-            { this.state.openSearch && (
-
-              <div className="search">              
-                <input
-                  type="text"
-                  placeholder="Type park name to search"
-                  value={ this.state.query }
-                  onChange={e => this.displayQuery(e.target.value)}
-                >                
-                </input>
-
-                <Search 
-                  locations={ this.state.locations }
-                  matchingLocations={ this.state.matchingLocations }          
-                  markers={ this.state.markers }
-                  lat = { this.lat }
-                  lng = { this.lng }
-                  updateInfoWindow= { this.updateInfoWindow }
-                  openInfoWindow={ this.openInfoWindow }
-                />
-              </div>
-              )}
+            </main>
           </div>
         );
       }

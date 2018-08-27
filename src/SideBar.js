@@ -7,13 +7,12 @@ class SideBar extends Component {
 		
 
 		return (
-			<button 
-				className="sidebar-button"
-				
-				onClick= { this.props.updateBar }
-			>
-				Park List
-			</button>
+              <button className="header__button" 
+              
+                onClick= { this.props.updateBar }
+                >
+                Park List
+                </button>
 		)
 	}
 }
