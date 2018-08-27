@@ -24,6 +24,8 @@ class LocationsList extends Component {
 
 				<button
 					onClick={ this.showInfoWindow }
+					aria-label={ parkName }
+					tabIndex="0"
 				>
 					{ parkName }
 				</button>

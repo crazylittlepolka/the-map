@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Search from './Search'
 import Error from './Error'
-import SideBar from './SideBar'
 
 import axios from 'axios'
 import escapeRegExp from 'escape-string-regexp'
@@ -179,21 +178,22 @@ class App extends Component {
           <div role="application" className="layout">
             <header className="layout__header header">
 
-              <button className="header__button" 
+              <button aria-label="show/hide parks list" className="header__button" 
               
                 onClick= { this.updateBar }
                 >
-                  <i class="fa fa-bars"> </i>
+                  <i class="fa fa-bars"></i>
                     Parks List
                 </button>
 
               <h1 className="header__title">Discover Green Fields of Warsaw</h1>
             </header>
 
-            <aside className={`layout__sidebar${ this.state.openSearch ? ' layout__sidebar--open' : ''}`}>
+            <aside role="navigation" aria-label="park list"className={`layout__sidebar${ this.state.openSearch ? ' layout__sidebar--open' : ''}`}>
               <input
+                role="search"
                 type="text"
-                placeholder="Type park name to search"
+                placeholder="Park Search"
                 value={ this.state.query }
                 onChange={e => this.displayQuery(e.target.value)}
               >
@@ -210,9 +210,10 @@ class App extends Component {
               />
             </aside>
 
-            <main className="layout__main">
+            <main role="presentation" aria-label="map" className="layout__main">
               <div id="map-item"></div>
             </main>
+            <footer>Park information from foursquare.com</footer>
           </div>
         );
       }

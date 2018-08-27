@@ -16,12 +16,13 @@ body {
     position: relative;
     z-index: 2;
     height: 80px;
+    color: #8D6C80;
     flex-basis: 100%;
 }
 
 .layout__sidebar {
     width: 1px;
-    height: calc(100% - 60px);
+    height: calc(100% - 80px);
     background-color: #fff;
     box-shadow: 2px 0 10px 0 rgba(0,0,0,.2);
     transition: width .2s;
@@ -31,7 +32,7 @@ body {
 .layout__main {
     position: relative;
     width: calc(100% - 1px);
-    height: calc(100% - 60px);
+    height: calc(100% - 80px);
     transition: width .2s;
 }
 
@@ -51,7 +52,7 @@ body {
 .header {
     display:flex;
     justify-content: center;
-   
+   	align-content: center;
     background-color: #fff;
     box-shadow: 2px 0 10px 0 rgba(0,0,0,.2);
 }
@@ -59,10 +60,11 @@ body {
 .header__button {
     position: absolute;
     left: 10px;
-    top: 70%;
+    top: 80%;
     width: auto;
     transform: translateY(-50%);
     font-size: 1em;
+    color: #8D6C80;
     background-color: transparent;
 }
 
@@ -73,7 +75,7 @@ body {
 .header__title {
     margin: 0;
     padding: 10px 30px;
-    text-align: right;
+    text-align: center;
 }
 .sidebar-button {
 	cursor: pointer;
@@ -81,20 +83,13 @@ body {
 
 /* SEARCH */
 
-.search {	
-	top: 530px;	
-	position: relative;
-
-}
-
 input {
-	position: fixed;
-	width: 100%;
 	padding: 10px;
 	border-style: none;
 	font-family: 'Saira', sans-serif;
 	color: 8D6C80;
 }
+
 span {
 	font-size: 30px;
 	cursor: pointer;
@@ -111,7 +106,13 @@ button {
 
 button:hover {
 	background-color: #fff;
-	color: ##D9E7C8;
+	color: #8D6C80;
+}
+
+/*FOOTER*/
+footer {
+	text-align: center;
+	color: #fff;
 }
 
 /* ERROR */
@@ -126,8 +127,6 @@ button:hover {
 
 /*MEDIA QUERY*/
 
-
-
 @media screen and (max-width: 640px) {
 
 	#map-item {
@@ -138,8 +137,9 @@ button:hover {
 	h1 {
 		font-size: 20px;
 	}
-
 }
+
+
 @media screen and (min-width: 600px) {
     .layout__sidebar {
         position: relative;
@@ -162,4 +162,26 @@ button:hover {
     .layout__sidebar--open + .layout__main {
         width: calc(100% - 300px);
     }
+}
+@media screen and (max-width: 599px) {
+	.layout__sidebar--open {
+		width: 200px;
+	}
+	    .layout__sidebar--open + .layout__main {
+        width: calc(100% - 200px);
+    }
+}
+@media screen and (max-width: 439px) {
+	.layout__sidebar--open {
+		width: 150px;
+	}
+	    .layout__sidebar--open + .layout__main {
+        width: calc(100% - 150px);
+    }
+}
+
+@media screen and (max-width: 360px) {
+	.layout__header {
+		height: 100px;
+	}
 }
