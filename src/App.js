@@ -102,7 +102,6 @@ class App extends Component {
       const infoWindow = new window.google.maps.InfoWindow({ maxWidth: 100});
       this.infoWindow = infoWindow;
 
-      //build and display markers
       this.createMarkers();
     }
 
@@ -114,8 +113,9 @@ class App extends Component {
     })
   }
 
+  //function to create markers
   createMarkers = () => {
-    const newMarkers = [];
+    const newMarkers = []; //markers after filtering by search
 
     this.state.locations.map(location => {
 
@@ -159,15 +159,14 @@ class App extends Component {
     this.setState({ markers: newMarkers});
   }
 
-  //function to open/hide search side bar
+  //function to open/hide search sidebar
   updateBar = () => {
     const barIsOpen = this.state.openSearch;
     this.setState({ openSearch : !barIsOpen })
-
   }
 
   render() {    
-
+      //error handler
       if(this.state.error) {
 
         return <Error />
@@ -178,13 +177,12 @@ class App extends Component {
           <div role="application" className="layout">
             <header className="layout__header header">
 
-              <button aria-label="show/hide parks list" className="header__button" 
-              
+              <button aria-label="show/hide parks list" className="header__button"               
                 onClick= { this.updateBar }
-                >
-                  <i class="fa fa-bars"></i>
-                    Parks List
-                </button>
+              >
+                <i class="fa fa-bars"></i>
+                Parks List
+              </button>
 
               <h1 className="header__title">Discover Green Fields of Warsaw</h1>
             </header>
