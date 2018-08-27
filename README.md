@@ -23,8 +23,8 @@ Should user have loading issues the respective alert will appear on the screen.
 Main map constructor functions, API fetch inspired by tutorial:
 https://www.youtube.com/watch?v=ywdxLNjhBYw 
 
-Restaurants informations API from: foursquare.com
+Restaurants informations API from: foursquare.com https://foursquare.com
 
-Map from googlemaps.com
+Map from https://www.google.pl/maps
 
 Search function inspired by Udacity lessons.
