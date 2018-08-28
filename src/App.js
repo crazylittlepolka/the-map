@@ -21,7 +21,8 @@ class App extends Component {
 
   //functions are invoked
   componentDidMount(){
-    this.getData();        
+    this.getData();
+    window.gm_authFailure = () => this.setState({ error: true });        
   }
 
   //function to load built map
@@ -174,13 +175,13 @@ class App extends Component {
       } else {
 
         return (
-          <div role="application" className="layout">
+          <div className="layout">
             <header className="layout__header header">
 
               <button aria-label="show/hide parks list" className="header__button"               
                 onClick= { this.updateBar }
               >
-                <i class="fa fa-bars"></i>
+                <i className="fa fa-bars"></i>
                 Parks List
               </button>
 
@@ -208,7 +209,7 @@ class App extends Component {
               />
             </aside>
 
-            <main role="presentation" aria-label="map" className="layout__main">
+            <main role="application" aria-label="map" className="layout__main">
               <div id="map-item"></div>
             </main>
             <footer>Park information from foursquare.com</footer>

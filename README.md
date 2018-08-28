@@ -18,6 +18,14 @@ Should user have loading issues the respective alert will appear on the screen.
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
+## Production mode
+* run the production mode with `npm run build`
+* navigate to the build directory and install static server with `npm install -g serve`
+* run the server with `serve -s build`
+* open `localhost:5000` in your browser
+* the mode includes ServiceWorker by default
+
+
 ## Dependencies
 
 Main map constructor functions, API fetch inspired by tutorial:
