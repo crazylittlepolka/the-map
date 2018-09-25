@@ -12,6 +12,8 @@ By clicking on park name or chosen marker InfoWindow with park name and its Lat/
 
 Should user have loading issues the respective alert will appear on the screen.
 
+Check the live version of the app: https://crazylittlepolka.github.io/the-map/
+
 ## To get started:
 
 * clone or download the repository
